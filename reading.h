@@ -12,11 +12,10 @@ struct image {
     unsigned int cols;
     unsigned int maxVal;
     std::string format;
-    std::string comment;
     std::vector <uint8_t> grayvalues;
 };
 
 image pgm_read( const std::string filepath){
     
-}
+
 #endif // READING_H
