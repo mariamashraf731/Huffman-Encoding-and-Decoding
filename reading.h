@@ -28,7 +28,7 @@ image pgm_read( const std::string filepath)
     if(!s)
     {
         std::cout << "not opened"<<std::endl;
-        return read_pgm;
+        return im;
     }
     else std::cout<<"opened"<<std::endl;
 
