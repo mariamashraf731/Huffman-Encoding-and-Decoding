@@ -34,9 +34,9 @@ image pgm_read( const std::string filepath)
 
     s>>im.format;//getting image format
 
-    s>>im.cols;//getting number of columns
+    s>>im.rows;//getting number of columns
 
-    s>>im.rows;//getting number of rows
+    s>>im.cols;//getting number of rows
 
     im.num_pixels=im.cols*im.rows; //getting number of pixels
 
@@ -58,6 +58,7 @@ image pgm_read( const std::string filepath)
         std::cout<<"couldn't read all pixels"<<std::endl;
     }
     else std::cout <<"all has been read"<<std::endl;
+    s.close();
 
     return im;
 
