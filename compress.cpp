@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
     out<<im.format<<std::endl;
     out<<im.rows<<" "<<im.cols<<std::endl;
     out<<im.maxVal<<std::endl;
-    out<<compressed_string.size()<<std::endl;
+    out<<compressed_bytes.size()<<" "<< compressed_string.size()<< Frequency.size() <<std::endl;
 
     //compressed array
     for(auto byte:compressed_bytes ){
