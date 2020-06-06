@@ -36,12 +36,16 @@ int main(int argc, char* argv[])
     }
 
     //compressed array
+    int i=0;
     for(auto byte:compressed_bytes ){
         out<<byte;
+        i++;
     }
-    out<<std::endl;
+    //std::cout<<i<<std::endl;
+    //std::cout<<compressed_bytes.size()<<std::endl;
 
-    
+
+
 
     out.close();
 
