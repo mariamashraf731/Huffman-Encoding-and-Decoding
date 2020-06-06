@@ -4,7 +4,7 @@
 #include <queue>
 #include <unordered_map>
 #include <string>
-#include "reading.h"
+
 #include <vector>
 using namespace std;
 
@@ -39,27 +39,29 @@ struct comp
 };
 
 //traverse the huffman tree and decode the encoded string
-std::string  traverse_huffmantree(Node* root , int &top_index , string str)
+uint8_t  traverse_huffmantree(Node* root , int &top_index , std::string encoded)
 {
-    std::string decoded="";
-    if (root == nullptr)
-        return;
-    //found a leaf node
-    if (!root->left && !root->right)
-    {
-        decoded += root->pixel;
-        return decoded;
-    }
-    top_index++;
+    uint8_t decoded=0;
+    if (root ){
 
-    if (str[top_index]== '0')
-        decode (root->left , top_index , str);
-    else
-        decode (root->right, top_index, str);
+        //found a leaf node
+        if (!root->left && !root->right)
+        {
+            decoded= ( root->pixel);
+            return decoded;
+        }
+        top_index++;
+
+        if (encoded[top_index]== '0')
+            traverse_huffmantree(root->left , top_index , encoded);
+        else
+            traverse_huffmantree(root->right, top_index, encoded);
+    }
+    return decoded;
 }
 
 // Builds Huffman tree and decode the input
-std::string decode( std::unordered_map<uint8_t,int> freq_map, std::string encoded)
+std::vector<uint8_t> decode( std::unordered_map<uint8_t,int> freq_map, std::string encoded)
 {
     //creating a priority queue to store leaf nodes of huffmantree
     priority_queue<Node* , vector<Node*> , comp >Pq;
@@ -91,11 +93,13 @@ std::string decode( std::unordered_map<uint8_t,int> freq_map, std::string encode
     //transverse the huffmantree again and decode the encoded string
     int top_index =-1;
     //std::cout << " \nDecoded string is : \n ";
+    std::vector<uint8_t> decoded;
+
     while ( top_index < (int)encoded.size() - 2)
     {
-        traverse_huffmantree(root , top_index , encoded);
+        uint8_t temp = traverse_huffmantree(root , top_index , encoded);
+        decoded.push_back(temp);
     }
-    return encoded;
-  
-}
-#endif // DECODING_H
+    return decoded;
+
+}#endif // DECODING_H
