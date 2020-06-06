@@ -4,10 +4,58 @@
 #include <queue>
 #include <unordered_map>
 #include <string>
-#include "oop_pgm.h"
+#include "reading.h"
 #include <vector>
 using namespace std;
 
+// a tree node
+struct Node
+{
+    uint8_t pixel;
+    int freq;
+    Node *left, *right;
+};
+
+// function to allocate a new node
+Node* getnode (uint8_t pixel, int freq, Node* left, Node* right)
+{
+    Node* node = new Node();
+    node->pixel = pixel;
+    node->freq = freq;
+    node->left = left;
+    node->right = right;
+
+    return node;
+}
+//comparison object to be used to order the heap
+struct comp
+{
+    bool operator()(Node* l, Node* r)
+    {
+        //highest priority item has lowest frequency
+        return l->freq > r->freq;
+
+    }
+};
+
+//traverse the huffman tree and decode the encoded string
+void traverse_huffmantree(Node* root , int &top_index , string str)
+{
+    if (root == nullptr)
+        return;
+    //found a leaf node
+    if (!root->left && !root->right)
+    {
+        cout<< root->pixel;
+        return;
+    }
+    top_index++;
+
+    if (str[top_index]== '0')
+        decode (root->left , top_index , str);
+    else
+        decode (root->right, top_index, str);
+}
 
 // Builds Huffman tree and decode the input
 std::unordered_map<uint8_t,string> decode( std::unordered_map<uint8_t,int> freq_map)
@@ -39,8 +87,13 @@ std::unordered_map<uint8_t,string> decode( std::unordered_map<uint8_t,int> freq_
     // root stores pointer to root of huffmantree
     Node* root = Pq.top();
 
+    //transverse the huffmantree again and decode the encoded string
+    int top_index =-1;
+    std::cout << " \nDecoded string is : \n ";
+    while ( top_index < (int)str.size() - 2)
+    {
+        traverse_huffmantree(root , top_index , str);
+    }
   
-
-
 }
 #endif // DECODING_H
