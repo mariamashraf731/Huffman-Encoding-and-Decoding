@@ -96,7 +96,7 @@ std::unordered_map<uint8_t,string> buildhuffmanTree( std::unordered_map<uint8_t,
 }
 
 //get the compressed code of the image
-std::string bits_string (std::vector <uint8_t> image,  unordered_map <uint8_t , string > hCode){
+std::string compressed_string (std::vector <uint8_t> image,  unordered_map <uint8_t , string > hCode){
     std::string bits_string="";
     //cout << " bits string  :  ";
     for(auto pixel : image){
@@ -107,7 +107,7 @@ std::string bits_string (std::vector <uint8_t> image,  unordered_map <uint8_t , 
 }
 
 //converting bits string to bytes array
-std::vector <uint8_t> bytes_array (std::string bits_string){
+std::vector <uint8_t> compressed_bytes (std::string bits_string){
     unsigned char remaining_bits = (8-(bits_string.size()%8));
     std::string temp="";
     std::vector <uint8_t> bytes_array ;
