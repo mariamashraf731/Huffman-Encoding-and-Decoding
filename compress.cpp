@@ -27,7 +27,13 @@ int main(int argc, char* argv[])
     out<<im.format<<std::endl;
     out<<im.rows<<" "<<im.cols<<std::endl;
     out<<im.maxVal<<std::endl;
-    out<<compressed_bytes.size()<<" "<< compressed_string.size()<< Frequency.size() <<std::endl;
+    out<<compressed_bytes.size()<<" "<< compressed_string.size()<<" " << Frequency.size() <<std::endl;
+
+    //frequency map
+    for (auto m : Frequency)
+    {
+        out << m.first<< " " << m.second << std::endl;
+    }
 
     //compressed array
     for(auto byte:compressed_bytes ){
@@ -35,11 +41,7 @@ int main(int argc, char* argv[])
     }
     out<<std::endl;
 
-    //frequency map
-    for (auto m : Frequency)
-    {
-        out << m.first<< " " << m.second << std::endl;
-    }
+    
 
     out.close();
 

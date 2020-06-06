@@ -58,6 +58,7 @@ image pgm_read( const std::string filepath)
         std::cout<<"couldn't read all pixels"<<std::endl;
     }
     else std::cout <<"all has been read"<<std::endl;
+    s.close();
 
     return im;
 
