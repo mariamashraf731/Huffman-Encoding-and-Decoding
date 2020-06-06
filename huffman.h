@@ -95,25 +95,50 @@ std::unordered_map<uint8_t,string> buildhuffmanTree( std::unordered_map<uint8_t,
     return huffmanCode;
 }
 
+//get the compressed code of the image
 std::string bits_string (std::vector <uint8_t> image,  unordered_map <uint8_t , string > hCode){
-    std::string bitsString="";
+    std::string bits_string="";
     //cout << " bits string  :  ";
     for(auto pixel : image){
       //  std::cout << hCode.at(ch);
-        bitString += hCode.at(pixel);
+        bits_string += hCode.at(pixel);
     }
-    return bitsString;
+    return bits_string;
 }
 
+//converting bits string to bytes array
 std::vector <uint8_t> bytes_array (std::string bits_string){
-    std::stringstream stream(bits_string);
+    unsigned char remaining_bits = (8-(bits_string.size()%8));
+    std::string temp="";
     std::vector <uint8_t> bytes_array ;
-    while (stream.good()) {
-        std::bitset<8> byte;
-        ss >>byte;
-        uint8_t b = uint8_t(byte.to_ulong());
-        bytes_array.push_back(b);
+    for(auto b :bits_string){
+        temp.push_back(b);
+        if(temp.size()==8){
+            std::bitset<8> byte(temp);
+            bytes_array.push_back(uint8_t(byte.to_ulong()));
+            temp.clear();
+        }
     }
+    if(remaining_bits==8){
+     // std::cout<<"no remaining"<<std::endl;
+     // std::cout<< "compressed size :   "<<bytes_array.size()<<std::endl;
+        return bytes_array;
+
+    }
+
+    else{
+        for(int i =0 ;i<remaining_bits;i++)
+        {
+            temp.push_back('0');
+        }
+        std::bitset<8> remaining_byte (temp);
+        bytes_array.push_back(uint8_t(remaining_byte.to_ulong()));
+    }
+
+
+
+   // std::cout<< "compressed size :   "<<bytes_array.size()<<std::endl;
+
     //printing bytes_array
     /*
       for(auto i: bytes_array)
@@ -121,9 +146,7 @@ std::vector <uint8_t> bytes_array (std::string bits_string){
           std::cout<<i <<" ";
       }
       */
-    //std::cout<< "compressed size :   "<<bytes_array.size()<<std::endl;
-    return byte_array;
+    return bytes_array;
 
 }
-
 #endif // HUFFMAN_H
