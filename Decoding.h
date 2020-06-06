@@ -39,15 +39,16 @@ struct comp
 };
 
 //traverse the huffman tree and decode the encoded string
-void traverse_huffmantree(Node* root , int &top_index , string str)
+std::string  traverse_huffmantree(Node* root , int &top_index , string str)
 {
+    std::string decoded="";
     if (root == nullptr)
         return;
     //found a leaf node
     if (!root->left && !root->right)
     {
-        cout<< root->pixel;
-        return;
+        decoded += root->pixel;
+        return decoded;
     }
     top_index++;
 
@@ -58,7 +59,7 @@ void traverse_huffmantree(Node* root , int &top_index , string str)
 }
 
 // Builds Huffman tree and decode the input
-std::unordered_map<uint8_t,string> decode( std::unordered_map<uint8_t,int> freq_map)
+std::string decode( std::unordered_map<uint8_t,int> freq_map, std::string encoded)
 {
     //creating a priority queue to store leaf nodes of huffmantree
     priority_queue<Node* , vector<Node*> , comp >Pq;
@@ -89,11 +90,12 @@ std::unordered_map<uint8_t,string> decode( std::unordered_map<uint8_t,int> freq_
 
     //transverse the huffmantree again and decode the encoded string
     int top_index =-1;
-    std::cout << " \nDecoded string is : \n ";
-    while ( top_index < (int)str.size() - 2)
+    //std::cout << " \nDecoded string is : \n ";
+    while ( top_index < (int)encoded.size() - 2)
     {
-        traverse_huffmantree(root , top_index , str);
+        traverse_huffmantree(root , top_index , encoded);
     }
+    return encoded;
   
 }
 #endif // DECODING_H
