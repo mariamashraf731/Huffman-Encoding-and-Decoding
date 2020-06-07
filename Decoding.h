@@ -92,7 +92,7 @@ std::string decode( std::unordered_map<uint8_t,int> freq_map, std::string encode
     //transverse the huffmantree again and decode the encoded string
     int top_index =-1;
     //std::cout << " \nDecoded string is : \n ";
-    while ( top_index < (int)encoded.size() - 2)
+    while ( top_index < (int)encoded.size() - 1)
     {
         traverse_huffmantree(root , top_index , encoded);
     
