@@ -4,7 +4,7 @@
 #include <queue>
 #include <unordered_map>
 #include <string>
-
+#include "reading.h"
 #include <vector>
 using namespace std;
 
@@ -39,36 +39,28 @@ struct comp
 };
 
 //traverse the huffman tree and decode the encoded string
-uint8_t  traverse_huffmantree(Node* root , int &top_index , std::string encoded)
+std::string traverse_huffmantree(Node* root , int &top_index , string str) 
 {
-    uint8_t decoded=0;
-    if (root ){
-
+    std::string decoded= "";
+    if (root == nullptr )
+      return ;
         //found a leaf node
-        if (!root->left && !root->right)
+    if (!root->left && !root->right)
         {
-            decoded= ( root->pixel);
+            decoded += ( root->pixel);
             return decoded;
         }
         top_index++;
 
-<<<<<<< HEAD
-    if (str[top_index]== '0')
-        traverse_huffmantree (root->left , top_index , str);
-    else
-        traverse_huffmantree (root->right, top_index, str);
-=======
-        if (encoded[top_index]== '0')
-            traverse_huffmantree(root->left , top_index , encoded);
+        if (str[top_index]== '0')
+            traverse_huffmantree(root->left , top_index , str);
         else
-            traverse_huffmantree(root->right, top_index, encoded);
-    }
-    return decoded;
->>>>>>> ffaca0af1e25f0fdb3f41b02e379a9c2b896f81a
+            traverse_huffmantree(root->right, top_index, str);
+    
 }
 
 // Builds Huffman tree and decode the input
-std::vector<uint8_t> decode( std::unordered_map<uint8_t,int> freq_map, std::string encoded)
+std::string decode( std::unordered_map<uint8_t,int> freq_map, std::string encoded)
 {
     //creating a priority queue to store leaf nodes of huffmantree
     priority_queue<Node* , vector<Node*> , comp >Pq;
@@ -100,13 +92,15 @@ std::vector<uint8_t> decode( std::unordered_map<uint8_t,int> freq_map, std::stri
     //transverse the huffmantree again and decode the encoded string
     int top_index =-1;
     //std::cout << " \nDecoded string is : \n ";
-    std::vector<uint8_t> decoded;
-
     while ( top_index < (int)encoded.size() - 2)
     {
-        uint8_t temp = traverse_huffmantree(root , top_index , encoded);
-        decoded.push_back(temp);
+        traverse_huffmantree(root , top_index , encoded);
+    
     }
-    return decoded;
+    return encoded;
 
-}#endif // DECODING_H
+}
+
+
+
+#endif // DECODING_H
