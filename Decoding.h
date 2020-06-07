@@ -53,9 +53,9 @@ std::string  traverse_huffmantree(Node* root , int &top_index , string str)
     top_index++;
 
     if (str[top_index]== '0')
-        decode (root->left , top_index , str);
+        traverse_huffmantree (root->left , top_index , str);
     else
-        decode (root->right, top_index, str);
+        traverse_huffmantree (root->right, top_index, str);
 }
 
 // Builds Huffman tree and decode the input
