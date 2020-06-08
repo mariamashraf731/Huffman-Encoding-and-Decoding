@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
     unsigned long i=0;
     for(auto byte:compressed_bytes ){
         if(i!=compressed_bytes.size()){
-            out<<byte;
+            out<<std::noskipws<<byte;
             i++;
         }
     }

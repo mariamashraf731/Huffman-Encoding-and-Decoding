@@ -24,12 +24,12 @@ deserillized deserilize(std::string filepath)
     deserillized dd;
     std::ifstream ifs;
     ifs.open(filepath, std::ios::in |std::ios::binary);
-    if(!ifs)
+   /* if(!ifs)
     {
         std::cout << "not opened"<<std::endl;
         return dd;
     }
-    else std::cout<<"opened"<<std::endl;
+    else std::cout<<"opened"<<std::endl;*/
 
     ifs>>dd.format;//getting image format
 
@@ -41,6 +41,7 @@ deserillized deserilize(std::string filepath)
     ifs>>dd.bytes_array_size;
     ifs>>dd.bits_string_size;
     ifs>>dd.freq_map_size;
+    ifs.ignore();
 
     dd.bits_string="";
     dd.freq_map={};
@@ -49,16 +50,17 @@ deserillized deserilize(std::string filepath)
     //reading frequency map
     for(unsigned int i=0; i< dd.freq_map_size;i++)
     {
-        uint8_t key =0;
+        int key =0;
         int val=0;
         ifs>>key;
         ifs>>val;
-        dd.freq_map.insert({key,val});
+        dd.freq_map.insert({uint8_t(key),val});
 
     }
     if(dd.freq_map.size()!=dd.freq_map_size)
     {
-        std::cout<<"freq_map not complete "<<std::endl;
+        std::cout<<"freq_map not complete   "<< dd.freq_map.size()<< " "<<dd.freq_map_size <<std::endl;
+
         return dd;
     }
     else std::cout <<"freq map done"<<std::endl;
