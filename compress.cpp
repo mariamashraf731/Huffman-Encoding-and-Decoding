@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     //serilizing compressed image
 
     std::ofstream out;
-    out.open("encoded.bin", std::ios::out | std::ios::binary);
+    out.open("encoded.enc", std::ios::out | std::ios::binary);
     //data
     out<<im.format<<std::endl;
     out<<im.cols<<" "<<im.rows<<std::endl;
