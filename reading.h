@@ -30,7 +30,7 @@ image pgm_read( const std::string filepath)
         std::cout << "not opened"<<std::endl;
         return im;
     }*/
-    else std::cout<<"opened"<<std::endl;
+    //else std::cout<<"opened"<<std::endl;
 
     s>>im.format;//getting image format
 

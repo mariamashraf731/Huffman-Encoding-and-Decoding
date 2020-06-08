@@ -19,10 +19,11 @@ int main(int argc, char* argv[])
 
     std::vector <uint8_t> compressed_bytes = bytes_array(compressed_string);
 
+
     //serilizing compressed image
 
     std::ofstream out;
-    out.open("encoded", std::ios::out | std::ios::binary);
+    out.open("encoded.bin", std::ios::out | std::ios::binary);
     //data
     out<<im.format<<std::endl;
     out<<im.rows<<" "<<im.cols<<std::endl;
@@ -32,17 +33,18 @@ int main(int argc, char* argv[])
     //frequency map
     for (auto m : Frequency)
     {
-        out << m.first<< " " << m.second << std::endl;
+        out << (int)m.first<< " " << m.second << std::endl;
     }
 
     //compressed array
-    int i=0;
+    unsigned long i=0;
     for(auto byte:compressed_bytes ){
-        out<<byte;
-        i++;
+        if(i!=compressed_bytes.size()){
+            out<<byte;
+            i++;
+        }
     }
-    //std::cout<<i<<std::endl;
-    //std::cout<<compressed_bytes.size()<<std::endl;
+
 
 
 
