@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
 
     std::unordered_map<uint8_t,int> Frequency = freq_map (im.pixels_values);
 
-    std::unordered_map<uint8_t,string> huffmanCode = buildhuffmanTree( Frequency);
+    std::unordered_map<uint8_t,std::string> huffmanCode = buildhuffmanTree( Frequency);
 
     std::string compressed_string = bits_string(im.pixels_values,huffmanCode);
 

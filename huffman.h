@@ -108,7 +108,7 @@ std::string bits_string (std::vector <uint8_t> image,  unordered_map <uint8_t , 
 
 //converting bits string to bytes array
 std::vector <uint8_t> bytes_array (std::string bits_string){
-    unsigned char remaining_bits = (8-(bits_string.size()%8));
+    unsigned int remaining_bits = (8-(bits_string.size()%8));
     std::string temp="";
     std::vector <uint8_t> bytes_array ;
     for(auto b :bits_string){
