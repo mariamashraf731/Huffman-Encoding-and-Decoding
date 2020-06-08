@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     out.open("encoded.bin", std::ios::out | std::ios::binary);
     //data
     out<<im.format<<std::endl;
-    out<<im.rows<<" "<<im.cols<<std::endl;
+    out<<im.cols<<" "<<im.rows<<std::endl;
     out<<im.maxVal<<std::endl;
     out<<compressed_bytes.size()<<" "<< compressed_string.size()<<" " << Frequency.size() <<std::endl;
 
@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
     unsigned long i=0;
     for(auto byte:compressed_bytes ){
         if(i!=compressed_bytes.size()){
-            out<<std::noskipws<<byte;
+            out<<byte;
             i++;
         }
     }
