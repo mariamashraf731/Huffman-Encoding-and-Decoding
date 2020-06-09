@@ -12,13 +12,13 @@ image pgm_read (const std::string);
 
 int main(int argc, char* argv[])
 {
-std::string file_path (argv[1]); 
-std::size_t type = file_path.find_last_of(".");
-std::string type_found = file_path.substr(type+1);
+std::string file_name (argv[1]);
+std::size_t type = file_name.find_last_of(".");
+std::string type_found = file_name.substr(type+1);
 
 if (type_found == "pgm")
 {
-    image im = pgm_read (argv[1]);
+    image im = pgm_read ("./data/"+std::string(argv[1]));
 
     std::unordered_map<uint8_t,int> Frequency = freq_map (im.pixels_values);
 
@@ -32,7 +32,7 @@ if (type_found == "pgm")
     //serilizing compressed image
 
     std::ofstream out;
-    out.open("encoded.enc", std::ios::out | std::ios::binary);
+    out.open("./compressed/encoded.enc", std::ios::out | std::ios::binary);
     //data
     out<<im.format<<std::endl;
     out<<im.cols<<" "<<im.rows<<std::endl;
@@ -59,12 +59,12 @@ if (type_found == "pgm")
 else if (type_found == "enc")
   {
 
-    deserillized compressed_data= deserilize(argv[1]);
+    deserillized compressed_data= deserilize("./compressed/"+std::string(argv[1]));
     std::vector <uint8_t> decoded = decode( compressed_data.freq_map, &compressed_data.bits_string);
 
     std::ofstream image_out;
 
-    image_out.open("image.pgm", std::ios::out | std::ios::binary);
+    image_out.open("./decompressed/image.pgm", std::ios::out | std::ios::binary);
 
     image_out<<compressed_data.format<<std::endl;
     image_out<<compressed_data.cols<<" "<<compressed_data.rows<<std::endl;
