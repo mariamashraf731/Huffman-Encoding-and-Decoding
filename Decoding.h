@@ -2,7 +2,7 @@
 #define DECODING_H
 #include <iostream>
 #include <queue>
-#include <unordered_map>
+#include <map>
 #include <string>
 #include "reading.h"
 #include <vector>
@@ -39,32 +39,32 @@ struct comparison
 };
 
 //traverse the huffman tree and decode the encoded string
-uint8_t traverse_huffmantree(HNode* root , int &top_index , string* str)
+uint8_t traverse_huffmantree(HNode* root , int &top_index , std::string* str)
 {
     uint8_t decoded;
     if (root == nullptr )
-      return decoded;
-        //found a leaf node
+        return decoded;
+    //found a leaf node
     if (!root->left && !root->right)
-        {
-            decoded += ( root->pixel);
-            return decoded;
-        }
-        top_index++;
+    {
+        decoded = ( root->pixel);
+        return decoded;
+    }
+    top_index++;
 
-        if ((*str)[top_index]== '0')
-           decoded= traverse_huffmantree(root->left , top_index , str);
-        else
-            decoded=traverse_huffmantree(root->right, top_index, str);
+    if ((*str)[top_index]== '0')
+        decoded= traverse_huffmantree(root->left , top_index , str);
+    else
+        decoded=traverse_huffmantree(root->right, top_index, str);
 
 }
 
 
 // Builds Huffman tree and decode the input
-std::vector<uint8_t> decode( std::unordered_map<uint8_t,int> freq_map,std::string * encoded)
+std::vector<uint8_t> decode( std::map<uint8_t,int> freq_map,std::string * encoded)
 {
     //creating a priority queue to store leaf nodes of huffmantree
-    priority_queue<HNode* , vector<HNode*> , comparison >Pq;
+    std::priority_queue<HNode* , std::vector<HNode*> , comparison >Pq;
 
     //create a leaf node for each character and add it to the priority_queue
     for(auto pair: freq_map) {

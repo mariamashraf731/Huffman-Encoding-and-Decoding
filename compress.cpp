@@ -1,6 +1,6 @@
 #include<iostream>
 #include "reading.h"
-#include<unordered_map>
+#include<map>
 #include "huffman.h"
 
 
@@ -11,9 +11,9 @@ int main(int argc, char* argv[])
     image im;
     im = pgm_read (argv[1]);
 
-    std::unordered_map<uint8_t,int> Frequency = freq_map (im.pixels_values);
+    std::map<uint8_t,int> Frequency = freq_map (im.pixels_values);
 
-    std::unordered_map<uint8_t,std::string> huffmanCode = buildhuffmanTree( Frequency);
+    std::map<uint8_t,std::string> huffmanCode = buildhuffmanTree( Frequency);
 
     std::string compressed_string = bits_string(im.pixels_values,huffmanCode);
 
@@ -37,12 +37,13 @@ int main(int argc, char* argv[])
     }
 
     //compressed array
-    unsigned long i=0;
-    for(auto byte:compressed_bytes ){
-        if(i!=compressed_bytes.size()){
-            out<<byte;
-            i++;
-        }
+    unsigned int i = 0;
+
+    for (auto byte : compressed_bytes )
+    {
+        out << byte;
+        if (++i == im.cols)
+            out<< std::endl;
     }
 
 

@@ -22,7 +22,7 @@ int main (int argc ,char* argv[])
 
     for (auto d : decoded)
     {
-       image_out<<d;
+        image_out<<d;
         if (++i == compressed_data.cols)
             image_out<< std::endl;
     }

@@ -5,12 +5,12 @@
 #include <string>
 #include<vector>
 #include<cstdint>
-#include<unordered_map>
+#include<map>
 #include<bitset>
 
 struct deserillized {
     std::string bits_string ;
-    std::unordered_map<uint8_t,int> freq_map;
+    std::map<uint8_t,int> freq_map;
     unsigned int bytes_array_size;
     unsigned int bits_string_size;
     unsigned int freq_map_size;
@@ -24,7 +24,7 @@ deserillized deserilize(std::string filepath)
     deserillized dd;
     std::ifstream ifs;
     ifs.open(filepath, std::ios::in |std::ios::binary);
-   /* if(!ifs)
+    /* if(!ifs)
     {
         std::cout << "not opened"<<std::endl;
         return dd;
@@ -57,20 +57,20 @@ deserillized deserilize(std::string filepath)
         dd.freq_map.insert({uint8_t(key),val});
 
     }
-    if(dd.freq_map.size()!=dd.freq_map_size)
+   /* if(dd.freq_map.size()!=dd.freq_map_size)
     {
         std::cout<<"freq_map not complete   "<< dd.freq_map.size()<< " "<<dd.freq_map_size <<std::endl;
 
         return dd;
     }
-    else std::cout <<"freq map done"<<std::endl;
+    else std::cout <<"freq map done"<<std::endl;*/
 
-
+    ifs.ignore();
     //reading bits_string
     for(unsigned int i=0;i<dd.bytes_array_size;i++)
     {
         uint8_t temp;
-        ifs>>temp;
+        ifs>>std::noskipws>>temp;
         std::bitset<8> bits = std::bitset<8>(temp);
         dd.bits_string += bits.to_string();
     }

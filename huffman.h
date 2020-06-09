@@ -2,12 +2,12 @@
 #define HUFFMAN_H
 #include <iostream>
 #include <queue>
-#include <unordered_map>
+#include <map>
 #include "freq_map.h"
 #include <bitset>
 #include <string>
 #include <vector>
-using namespace std;
+
 
 // a tree node
 struct Node
@@ -39,7 +39,7 @@ struct comp
     }
 };
 //traverse the huffman tree and store huffman codes in a map
-void encode(Node* root, string str, unordered_map<uint8_t , string> &huffmanCode)
+void encode(Node* root, std::string str, std::map<uint8_t , std::string> &huffmanCode)
 {
     if (root== nullptr)
         return;
@@ -54,10 +54,10 @@ void encode(Node* root, string str, unordered_map<uint8_t , string> &huffmanCode
 }
 
 // Builds Huffman tree and decode the input
-std::unordered_map<uint8_t,string> buildhuffmanTree( std::unordered_map<uint8_t,int> freq_map)
+std::map<uint8_t, std::string> buildhuffmanTree( std::map<uint8_t,int> freq_map)
 {
     //creating a priority queue to store leaf nodes of huffmantree
-    priority_queue<Node* , vector<Node*> , comp >Pq;
+    std::priority_queue<Node* , std::vector<Node*> , comp >Pq;
 
     //create a leaf node for each character and add it to the priority_queue
     for(auto pair: freq_map) {
@@ -84,11 +84,11 @@ std::unordered_map<uint8_t,string> buildhuffmanTree( std::unordered_map<uint8_t,
     Node* root = Pq.top();
 
     //transverse the huffmantree and store the code in the map
-    unordered_map<uint8_t , string > huffmanCode;
+    std::map<uint8_t , std::string > huffmanCode;
     encode (root , "" , huffmanCode);
 
     //print huffman Code
-   /* cout << " Huffman codes are :\n" << '\n';
+    /* cout << " Huffman codes are :\n" << '\n';
     for (auto pair: huffmanCode){
         cout << pair.first << " " << pair.second << '\n';
     }*/
@@ -96,11 +96,11 @@ std::unordered_map<uint8_t,string> buildhuffmanTree( std::unordered_map<uint8_t,
 }
 
 //get the compressed code of the image
-std::string bits_string (std::vector <uint8_t> image,  unordered_map <uint8_t , string > hCode){
+std::string bits_string (std::vector <uint8_t> image,  std::map <uint8_t , std::string > hCode){
     std::string bits_string="";
     //cout << " bits string  :  ";
     for(auto pixel : image){
-      //  std::cout << hCode.at(ch);
+        //  std::cout << hCode.at(ch);
         bits_string += hCode.at(pixel);
     }
     return bits_string;
@@ -120,8 +120,8 @@ std::vector <uint8_t> bytes_array (std::string bits_string){
         }
     }
     if(remaining_bits==8){
-     // std::cout<<"no remaining"<<std::endl;
-     // std::cout<< "compressed size :   "<<bytes_array.size()<<std::endl;
+        // std::cout<<"no remaining"<<std::endl;
+        // std::cout<< "compressed size :   "<<bytes_array.size()<<std::endl;
         return bytes_array;
 
     }
@@ -137,7 +137,7 @@ std::vector <uint8_t> bytes_array (std::string bits_string){
 
 
 
-   // std::cout<< "compressed size :   "<<bytes_array.size()<<std::endl;
+    // std::cout<< "compressed size :   "<<bytes_array.size()<<std::endl;
 
     //printing bytes_array
     /*
