@@ -20,9 +20,9 @@ if (type_found == "pgm")
 {
     image im = pgm_read ("./data/"+std::string(argv[1]));
 
-    std::unordered_map<uint8_t,int> Frequency = freq_map (im.pixels_values);
+    std::map<uint8_t,int> Frequency = freq_map (im.pixels_values);
 
-    std::unordered_map<uint8_t,std::string> huffmanCode = buildhuffmanTree( Frequency);
+    std::map<uint8_t,std::string> huffmanCode = buildhuffmanTree( Frequency);
 
     std::string compressed_string = bits_string(im.pixels_values,huffmanCode);
 
