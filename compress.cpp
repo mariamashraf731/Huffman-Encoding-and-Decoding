@@ -4,12 +4,14 @@
 #include "huffman.h"
 
 
-image pgm_read (const std::string);
+
+
 
 int main(int argc, char* argv[])
 {
     image im;
-    im = pgm_read (argv[1]);
+
+    im = pgm_read ("./data/"+std::string(argv[1]));
 
     std::map<uint8_t,int> Frequency = freq_map (im.pixels_values);
 
@@ -23,7 +25,7 @@ int main(int argc, char* argv[])
     //serilizing compressed image
 
     std::ofstream out;
-    out.open("encoded.enc", std::ios::out | std::ios::binary);
+    out.open("./compressed/image.enc", std::ios::out | std::ios::binary);
     //data
     out<<im.format<<std::endl;
     out<<im.cols<<" "<<im.rows<<std::endl;
